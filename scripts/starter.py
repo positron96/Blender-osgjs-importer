@@ -641,8 +641,8 @@ class Importer:
 				
 				
 	def process_vertex_attrs(self, vertex_attrs, n):
-		vertexArray = []
-		texArray = []
+		vertex_arr = []
+		tex_arr = []
 		
 		vertex = vertex_attrs.get('Vertex')
 		if vertex:		
@@ -651,7 +651,7 @@ class Importer:
 			if 'ItemSize' in vertex:
 				item_size = vertex['ItemSize']	
 				fdata, enc = self.load_array(vertex['Array'], item_size, mode)
-				vertexArray.append([fdata, enc, item_size])
+				vertex_arr.append([fdata, enc, item_size])
 
 		tex_coord0 = vertex_attrs.get('TexCoord0')
 		if tex_coord0:
@@ -660,9 +660,9 @@ class Importer:
 			if 'ItemSize' in tex_coord0:
 				item_size = tex_coord0['ItemSize']
 				fdata, enc = self.load_array(tex_coord0['Array'], item_size, mode)
-				texArray.append([fdata, enc, item_size])
+				tex_arr.append([fdata, enc, item_size])
 										
-		return vertexArray, texArray							
+		return vertex_arr, tex_arr							
 				
 	def getRigGeometry(self, parent, n):
 		logger.info("%s", ('#'*50, 'RigGeometry',))
@@ -890,8 +890,9 @@ class Importer:
 		logger.info('process_geometry has %d index_elems, %d vertices, %d tex', 
 		len(indices), len(vertices), len(textures))
 		mesh = Mesh()
+		mesh.name = node.get('Name')
 		if len(indices)>0:
-			for [indices_elem, mode] in indices:
+			for indices_elem, mode in indices:
 				logger.info('  len = %d (mode %s)', len(indices_elem), mode)
 				mat = Mat()
 				mesh.matList.append(mat)
@@ -1008,7 +1009,7 @@ class Importer:
 			self.process_child(child, n, bone)
 		
 
-	def process_osg_riggeometry(self, node, n, parent_bone):	
+	def process_osg_rig_geometry(self, node, n, parent_bone):	
 		write(dbg, ['RigGeometry'],n)			
 		mesh = self.getRigGeometry(node, n)
 		if len(mesh.vertPosList)>0:
@@ -1078,7 +1079,7 @@ class Importer:
 		elif child_type == 'osgAnimation.Skeleton':
 			self.process_osg_skeleton(child_obj, n, parent_bone)
 		elif child_type == 'osgAnimation.RigGeometry':
-			self.process_osg_riggeometry(child_obj, n, parent_bone)
+			self.process_osg_rig_geometry(child_obj, n, parent_bone)
 		elif child_type == 'osg.Geometry':
 			self.process_osg_geometry(child_obj, n, parent_bone)
 		elif child_type == 'osgAnimation.Bone':

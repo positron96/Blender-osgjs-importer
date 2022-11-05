@@ -666,7 +666,8 @@ class Mesh():
 		#if self.name is None:
 		#self.name=str(ParseID())+'-0-0'
 		self.sceneIDList=SceneIDList()
-		self.name=str(self.sceneIDList.meshID).zfill(3)+'-0-'+str(self.sceneIDList.objectID)
+		if self.name is None:
+			self.name = str(self.sceneIDList.meshID).zfill(3)+'-0-'+str(self.sceneIDList.objectID)
 		self.addFaces() 
 		if self.SPLIT==False:
 			self.addMesh()
