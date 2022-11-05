@@ -55,10 +55,11 @@ class BinaryReader(file):
 		self.xorOffset=0
 		self.xorData=''
 		self.logskip=False
-	def XOR(self,data):
+
+	def XOR(self, data):
 			self.xorData=''
 			for m in range(len(data)):
-				ch=ord(	chr(data[m] ^ self.xorKey[self.xorOffset])	)
+				ch = ord(	chr(data[m] ^ self.xorKey[self.xorOffset])	)
 				self.xorData+=struct.pack('B',ch)
 				if self.xorOffset==len(self.xorKey)-1:
 					self.xorOffset=0

@@ -20,7 +20,7 @@
                       "UniqueID": 13,
                       "Array": { 
                         "Uint32Array": { 
-                          "File": "model_file.bin.gz",
+                          "File": "model_file.bin",
                           "Size": 2984,
                           "Offset": 0,
                           "Encoding": "varint"
@@ -39,7 +39,7 @@
                       "UniqueID": 15,
                       "Array": { 
                         "Uint16Array": { 
-                          "File": "model_file.bin.gz",
+                          "File": "model_file.bin",
                           "Size": 243,
                           "Offset": 3892,
                           "Encoding": "varint"
@@ -154,7 +154,7 @@
                     "UniqueID": 9,
                     "Array": { 
                       "Uint32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 4240,
                         "Encoding": "varint"
@@ -167,7 +167,7 @@
                     "UniqueID": 11,
                     "Array": { 
                       "Uint32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 10836,
                         "Encoding": "varint"
@@ -180,7 +180,7 @@
                     "UniqueID": 10,
                     "Array": { 
                       "Int32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 17704,
                         "Encoding": "varint"
@@ -193,7 +193,7 @@
                     "UniqueID": 8,
                     "Array": { 
                       "Int32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 23036,
                         "Encoding": "varint"
@@ -215,7 +215,7 @@
                       "UniqueID": 23,
                       "Array": { 
                         "Uint32Array": { 
-                          "File": "model_file.bin.gz",
+                          "File": "model_file.bin",
                           "Size": 2984,
                           "Offset": 29212,
                           "Encoding": "varint"
@@ -234,7 +234,7 @@
                       "UniqueID": 25,
                       "Array": { 
                         "Uint16Array": { 
-                          "File": "model_file.bin.gz",
+                          "File": "model_file.bin",
                           "Size": 243,
                           "Offset": 33104,
                           "Encoding": "varint"
@@ -331,7 +331,7 @@
                     "UniqueID": 19,
                     "Array": { 
                       "Uint32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 33452,
                         "Encoding": "varint"
@@ -344,7 +344,7 @@
                     "UniqueID": 21,
                     "Array": { 
                       "Uint32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 40048,
                         "Encoding": "varint"
@@ -357,7 +357,7 @@
                     "UniqueID": 20,
                     "Array": { 
                       "Int32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 46916,
                         "Encoding": "varint"
@@ -370,7 +370,7 @@
                     "UniqueID": 18,
                     "Array": { 
                       "Int32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 1774,
                         "Offset": 52248,
                         "Encoding": "varint"
@@ -392,7 +392,7 @@
                       "UniqueID": 36,
                       "Array": { 
                         "Uint32Array": { 
-                          "File": "model_file.bin.gz",
+                          "File": "model_file.bin",
                           "Size": 1282,
                           "Offset": 58424,
                           "Encoding": "varint"
@@ -411,7 +411,7 @@
                       "UniqueID": 38,
                       "Array": { 
                         "Uint16Array": { 
-                          "File": "model_file.bin.gz",
+                          "File": "model_file.bin",
                           "Size": 162,
                           "Offset": 60036,
                           "Encoding": "varint"
@@ -526,7 +526,7 @@
                     "UniqueID": 32,
                     "Array": { 
                       "Uint32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 931,
                         "Offset": 60252,
                         "Encoding": "varint"
@@ -539,7 +539,7 @@
                     "UniqueID": 34,
                     "Array": { 
                       "Uint32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 931,
                         "Offset": 63712,
                         "Encoding": "varint"
@@ -552,7 +552,7 @@
                     "UniqueID": 33,
                     "Array": { 
                       "Int32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 931,
                         "Offset": 67120,
                         "Encoding": "varint"
@@ -565,7 +565,7 @@
                     "UniqueID": 31,
                     "Array": { 
                       "Int32Array": { 
-                        "File": "model_file.bin.gz",
+                        "File": "model_file.bin",
                         "Size": 931,
                         "Offset": 70164,
                         "Encoding": "varint"
@@ -587,7 +587,7 @@
                       "UniqueID": 42,
                       "Array": { 
                         "Uint16Array": { 
-                          "File": "model_file_wireframe.bin.gz",
+                          "File": "model_file_wireframe.bin",
                           "Size": 6844,
                           "Offset": 0,
                           "Encoding": "varint"
@@ -627,7 +627,7 @@
                       "UniqueID": 46,
                       "Array": { 
                         "Uint16Array": { 
-                          "File": "model_file_wireframe.bin.gz",
+                          "File": "model_file_wireframe.bin",
                           "Size": 6844,
                           "Offset": 13180,
                           "Encoding": "varint"
@@ -667,7 +667,7 @@
                       "UniqueID": 50,
                       "Array": { 
                         "Uint16Array": { 
-                          "File": "model_file_wireframe.bin.gz",
+                          "File": "model_file_wireframe.bin",
                           "Size": 3324,
                           "Offset": 26360,
                           "Encoding": "varint"
