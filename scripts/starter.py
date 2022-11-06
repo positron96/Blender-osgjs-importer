@@ -944,12 +944,10 @@ class Importer:
 				logger.info('  len = %d (mode %s)', len(indices_elem), mode)
 				mat = None
 				if mtl_uid:
-					mat = copy.copy(self.materials.get(mtl_uid))
+					mat = self.materials.get(mtl_uid)
 				if not mat:
 					mat = Mat()
 				mesh.matList.append(mat)
-				mat.IDStart = len(mesh.indiceList)
-				mat.IDCount = len(indices_elem)
 				mesh.indiceList.extend(indices_elem)
 				if mode == 'TRIANGLE_STRIP': mat.TRISTRIP = True
 				if mode == 'TRIANGLES': mat.TRIANGLE = True

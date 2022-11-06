@@ -356,7 +356,8 @@ class Mesh():
 		#if mat.name is None:
 		#	mat.name=self.name+'-mat-'+str(matID)
 		#mat.name=mesh.name
-		mat.name=mesh.name.split('-')[0]+'-'+str(matID)+'-'+str(self.sceneIDList.objectID)
+		if mat.name is None:
+			mat.name = mesh.name.split('-')[0]+'-'+str(matID)+'-'+str(self.sceneIDList.objectID)
 		blendMat=Blender.Material.New(mat.name)
 		blendMat.diffuseShader=Blender.Material.Shaders.DIFFUSE_ORENNAYAR
 		blendMat.specShader=Blender.Material.Shaders.SPEC_WARDISO
