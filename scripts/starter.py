@@ -928,12 +928,12 @@ class Importer:
 		if vertex_attr_list_node:
 			vertices, textures = self.process_vertex_attrs(vertex_attr_list_node, n)
 
-		state_set = node.get('StateSet')
 		mtl_uid = None
-		if state_set:
-			osg_state_set = state_set.get('osg.StateSet')
-			if osg_state_set:
-				mtl_uid = self.process_osg_state_set(osg_state_set, n)
+		# state_set = node.get('StateSet')		
+		# if state_set:
+		# 	osg_state_set = state_set.get('osg.StateSet')
+		# 	if osg_state_set:
+		# 		mtl_uid = self.process_osg_state_set(osg_state_set, n)
 
 		logger.info('process_geometry has %d indices, %d vertices, %d tex, matl uid %s', 
 			len(indices), len(vertices), len(textures), mtl_uid)
