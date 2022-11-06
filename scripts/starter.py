@@ -4,6 +4,7 @@ import Blender
 
 import json
 import logging
+import copy
 
 logger = logging.getLogger(__file__)
 logger.setLevel(logging.INFO)
@@ -13,8 +14,6 @@ logging.basicConfig(level=logging.INFO)
 #BINDPOSE = 0
 BINDPOSE = 1
 ################################################
-
-
 	
 
 class Importer:
@@ -29,6 +28,9 @@ class Importer:
 		self.bindskeleton = Skeleton()
 		self.bindskeleton.NICE = True
 		self.bindskeleton.ARMATURESPACE = True
+
+		self.state_uid_to_mtl_uid = {}
+		self.materials = {}
 		
 		self.firstmatrix = Matrix4x4([1,0,0,0, 0,0,1,0, 0,-1,0,0, 0,0,0,1])
 
@@ -611,8 +613,8 @@ class Importer:
 		offset = arr_obj['Offset']
 		encoding = arr_obj['Encoding']
 
-		write(dbg, ['Array: ', arr_type, 'Size: ', size, 'Offset: ', offset, 'Encoding: ',encoding, 'magic: ', self.magic], 0)
-		logger.info('load_array: %s, size: %d, ofs %d, enc %s, magic %s, mode %s', arr_type, size, offset, encoding, self.magic, mode)
+		#write(dbg, ['Array: ', arr_type, 'Size: ', size, 'Offset: ', offset, 'Encoding: ',encoding, 'magic: ', self.magic], 0)
+		#logger.info('load_array: %s, size: %d, ofs %d, enc %s, magic %s, mode %s', arr_type, size, offset, encoding, self.magic, mode)
 
 		path = self.find_path(arr_obj['File'])
 
@@ -647,7 +649,7 @@ class Importer:
 		vertex = vertex_attrs.get('Vertex')
 		if vertex:		
 			mode = 'Vertex'
-			logger.info('process_vertex_attrs: Vertex UID:%s', vertex.get('UniqueID'))
+			#logger.info('process_vertex_attrs: Vertex UID:%s', vertex.get('UniqueID'))
 			if 'ItemSize' in vertex:
 				item_size = vertex['ItemSize']	
 				fdata, enc = self.load_array(vertex['Array'], item_size, mode)
@@ -656,7 +658,7 @@ class Importer:
 		tex_coord0 = vertex_attrs.get('TexCoord0')
 		if tex_coord0:
 			mode = 'TexCoord0'
-			logger.info('process_vertex_attrs: TexCoord0 UID:%s', tex_coord0.get('UniqueID'))
+			#logger.info('process_vertex_attrs: TexCoord0 UID:%s', tex_coord0.get('UniqueID'))
 			if 'ItemSize' in tex_coord0:
 				item_size = tex_coord0['ItemSize']
 				fdata, enc = self.load_array(tex_coord0['Array'], item_size, mode)
@@ -856,7 +858,46 @@ class Importer:
 					list = texArray[0][0]
 					mesh.vertUVList = list
 		return mesh	
+
+	def process_osg_material(self, node, n):
+		logger.info('process_osg_material %s UID %s', node.get('Name'), node.get('UniqueID'))
+		uid = node['UniqueID']
+		mat = Mat()
+		mat.name = node.get('Name')
+		mat.rgbCol = node.get('Diffuse')
+		mat.specCol = node.get('Specular')
+		self.materials[uid] = mat
+		return uid
 		
+	def process_osg_state_set(self, node, n):
+		uid = node.get('UniqueID')
+		logger.info('process_osg_state_set %s UID:%s', node.get('Name'), uid)
+
+		if uid:
+			matl = None
+			attrs = node.get('AttributeList', [])
+			for attr in attrs:
+				matl = attr.get('osg.Material')
+				if matl:
+					mtl_uid = self.process_osg_material(matl, n+4)
+					self.state_uid_to_mtl_uid[uid] = mtl_uid
+					return mtl_uid
+			if attrs and not matl:
+				logger.warning('StateSet with AttributeList but without osg.Material')
+			if not attrs:
+				# link to existing state
+				return self.state_uid_to_mtl_uid[uid]
+		else:
+			return None
+
+	def get_matl_uid_from_state(self, state_node):
+		attrs = state_node.get('AttributeList', [])
+		for attr in attrs:
+			mtl = attr.get('osg.Material')
+			if mtl:
+				return mtl.get('UniqueID')
+		return None
+			
 			
 	def process_geometry(self, node, n):
 		logger.info('process_geometry %s(UID:%s)', node.get('Name'), node.get('UniqueID'))
@@ -886,15 +927,26 @@ class Importer:
 		vertex_attr_list_node = node.get('VertexAttributeList')
 		if vertex_attr_list_node:
 			vertices, textures = self.process_vertex_attrs(vertex_attr_list_node, n)
-			
-		logger.info('process_geometry has %d index_elems, %d vertices, %d tex', 
-		len(indices), len(vertices), len(textures))
+
+		state_set = node.get('StateSet')
+		mtl_uid = None
+		if state_set:
+			osg_state_set = state_set.get('osg.StateSet')
+			if osg_state_set:
+				mtl_uid = self.process_osg_state_set(osg_state_set, n)
+
+		logger.info('process_geometry has %d indices, %d vertices, %d tex, matl uid %s', 
+			len(indices), len(vertices), len(textures), mtl_uid)
 		mesh = Mesh()
 		mesh.name = node.get('Name')
 		if len(indices)>0:
 			for indices_elem, mode in indices:
 				logger.info('  len = %d (mode %s)', len(indices_elem), mode)
-				mat = Mat()
+				mat = None
+				if mtl_uid:
+					mat = copy.copy(self.materials.get(mtl_uid))
+				if not mat:
+					mat = Mat()
 				mesh.matList.append(mat)
 				mat.IDStart = len(mesh.indiceList)
 				mat.IDCount = len(indices_elem)
